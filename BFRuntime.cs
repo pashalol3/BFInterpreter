@@ -23,10 +23,12 @@ namespace BFCompiler
         public BFInterpreter(string content)
         {
             _sourceCode = content;
-            ParseSourceCode().BackPatch().Execute();
+            ParseSourceCode();
+            BackPatch();
+            Execute();
         }
 
-        private BFInterpreter BackPatch()
+        private void BackPatch()
         {
             var loopStack = new int[_parsedInstructions.Count];
             int stackPointer = 0;
@@ -64,10 +66,9 @@ namespace BFCompiler
 
             if (stackPointer > 0)
                 throw new Exception("Unmatched [");
-            return this;
         }
 
-        private BFInterpreter ParseSourceCode()
+        private void ParseSourceCode()
         {
             var grouped = new List<GroupedSymbols>();
             var currentAddres = 0;
@@ -85,13 +86,10 @@ namespace BFCompiler
                     repsCount++;
                 }
                 _cursor = tempCursor;
-                grouped.Add(
-                    new(_tokenMap[startToken], repsCount, currentAddres, IsLoop(startToken))
-                );
+                grouped.Add(new(_tokenMap[startToken], repsCount, currentAddres));
                 currentAddres++;
             }
             _parsedInstructions = grouped;
-            return this;
         }
 
         public void Execute()
@@ -126,7 +124,9 @@ namespace BFCompiler
                     case TokenKind.Print:
                         for (var j = 0; j < instruction.Count; j++)
                             Console.Write(
-                                char.IsAscii((char)memory[head]) ? (char)memory[head] : memory[head]
+                                char.IsBetween((char)memory[head], (char)32, (char)127)
+                                    ? (char)memory[head]
+                                    : $"\\x{memory[head]:X2}"
                             );
                         ip++;
                         break;
@@ -156,15 +156,12 @@ namespace BFCompiler
 
         private bool NextToken(out char ch)
         {
+            ch = (char)0;
             if (_cursor >= _sourceCode.Length)
-            {
-                ch = (char)0;
                 return false;
-            }
+
             while (!IsValidToken(_sourceCode[_cursor]) && _cursor < _sourceCode.Length)
-            {
                 _cursor++;
-            }
 
             ch = _sourceCode[_cursor];
             _cursor++;

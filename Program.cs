@@ -32,7 +32,7 @@ internal class Program
     private static void Main(string[] args)
     {
 #if DEBUG
-        new BFInterpreter(TEST_PROGRAM);
+        var _ = new BFInterpreter(TEST_PROGRAM);
 #endif
 #if RELEASE
         if (args.Length == 0)
@@ -43,13 +43,13 @@ internal class Program
         if (!File.Exists(filePath))
             LogError("ERROR: invalid file path");
         var fileContnet = File.ReadAllText(filePath);
-        new BFInterpreter(fileContnet);
+        var _ = new BFInterpreter(fileContnet);
 #endif
     }
 
     private static void LogError(string err)
     {
-        Console.WriteLine();
+        Console.WriteLine(err);
         Environment.Exit(1);
     }
 }

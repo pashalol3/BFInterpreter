@@ -12,7 +12,7 @@ namespace BFCompiler
         LoopEnd
     }
 
-    internal struct GroupedSymbols(TokenKind token, int count, int addres = -1, bool isLoop = false)
+    internal struct GroupedSymbols(TokenKind token, int count, int addres = -1)
     {
         public int Count { get; } = count;
         public TokenKind Token { get; } = token;
