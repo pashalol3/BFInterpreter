@@ -16,7 +16,7 @@ namespace BFCompiler
     {
         public int Count { get; } = count;
         public TokenKind Token { get; } = token;
-        public int InstructionAddress { get; set; } = addres;
+        public int InstructionAddress { get; set; } = address;
 
         public override string ToString()
         {
