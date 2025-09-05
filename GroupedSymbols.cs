@@ -12,11 +12,11 @@ namespace BFCompiler
         LoopEnd
     }
 
-    internal struct GroupedSymbols(TokenKind token, int count, int addres = -1)
+    internal struct GroupedSymbols(TokenKind token, int count, int address = -1)
     {
         public int Count { get; } = count;
         public TokenKind Token { get; } = token;
-        public int InstructionAddress { get; set; } = addres;
+        public int InstructionAddress { get; set; } = address;
 
         public override string ToString()
         {

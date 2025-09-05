@@ -1,4 +1,4 @@
-# BFCompiler
+# BFInterpreter
 
 Простой интерпретатор для языка Brainfuck
 
