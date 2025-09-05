@@ -110,7 +110,7 @@ namespace BFCompiler
                         break;
                     case TokenKind.Dec:
                         for (var j = 0; j < instruction.Count; j++)
-                            memory[head] = (byte)((memory[head] - 1 + byte.MaxValue + 1) % 256);
+                            memory[head] = (byte)((memory[head] - 1 + 256) % 256);
                         ip++;
                         break;
                     case TokenKind.MoveLeft:
